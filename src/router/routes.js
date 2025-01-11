@@ -1,3 +1,5 @@
+import CounTer from 'components/CounTer.vue'
+
 const routes = [
   {
     path: '/',
@@ -5,6 +7,10 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') }
     ]
+  },
+  {
+    path: '/counter',
+    component: CounTer
   },
 
   // Always leave this as last one,
