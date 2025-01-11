@@ -40,7 +40,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <CounTer />
     </q-page-container>
   </q-layout>
 </template>
@@ -48,6 +48,7 @@
 <script>
 import { defineComponent } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import CounTer from 'components/CounTer.vue'
 
 const linksList = [
   {
@@ -98,7 +99,8 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink,
+    CounTer
   },
 
   data () {
