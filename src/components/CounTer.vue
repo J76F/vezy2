@@ -5,7 +5,7 @@
       <button @click="$store.decrement">
         -
       </button>
-      <button @click="$store.increment">
+      <button @click="$store.increment" @dblclick="$store.add(10)">
         +
       </button>
     </div>
