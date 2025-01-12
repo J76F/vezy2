@@ -2,13 +2,13 @@
   <div class="counter">
     <h1 class="count" v-text="$store.counter" />
     <div class="button__wrapper">
-      <button @click="$store.decrement">
+      <button @click="decrement">
         -
       </button>
-      <button @dblclick="$store.add(-10)">
+      <button @dblclick="add(-10)">
         --
       </button>
-      <button @click="$store.increment" @dblclick="$store.add(10)">
+      <button @click="increment" @dblclick="add(10)">
         +/++
       </button>
     </div>
@@ -22,10 +22,59 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { debounce } from 'quasar'
+
 
 export default defineComponent({
   name: 'CounTer',
   props: {
+  },
+  data () {
+    return {
+      lastKnop: ''
+    }
+  },
+
+  created (){
+    this.resetLastKnop = debounce(this.resetLastKnop, 500)
+  },
+
+  methods: {
+    increment() {
+      console.log(`knop geklikt waarde was: ${this.lastKnop}`)
+      if (this.lastKnop === 'increment') { 
+        console.log('increment 2e')
+        return
+      } else {
+        console.log('increment 1e')
+      }
+      console.log('increment')
+      this.lastKnop = 'increment'
+      this.resetLastKnop()
+      this.$store.increment()
+    },
+    decrement() {
+      console.log(`knop geklikt waarde was: ${this.lastKnop}`)
+      if (this.lastKnop === 'decrement') { 
+        console.log('decrement 2e')
+        return
+      } else {
+        console.log('decrement 1e')
+      }
+      console.log('decrement')
+      this.lastKnop = 'decrement'
+      this.resetLastKnop()
+      this.$store.decrement()
+    },
+    add (nr) {
+      console.log(`knop dubbel geklikt waarde was: ${this.lastKnop}`)
+      console.log('add')
+      this.$store.add(nr)
+    },
+    resetLastKnop () {
+      console.log('reset')
+      this.lastKnop = ''
+    }
   }
 })
 
