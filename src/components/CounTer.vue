@@ -2,11 +2,14 @@
   <div class="counter">
     <h1 class="count" v-text="$store.counter" />
     <div class="button__wrapper">
-      <button @click="$store.decrement" @dblclick="$store.add(-10)">
+      <button @click="$store.decrement">
         -
       </button>
+      <button @dblclick="$store.add(-10)">
+        --
+      </button>
       <button @click="$store.increment" @dblclick="$store.add(10)">
-        +
+        +/++
       </button>
     </div>
     <q-toggle
