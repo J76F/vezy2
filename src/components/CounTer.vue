@@ -37,10 +37,53 @@ export default defineComponent({
 
   created (){
     this.resetLastKnop = debounce(this.resetLastKnop, 500)
+    console.log(this.$store.$state)
+
+    this.$store.$onAction(
+      ({
+        name, // name of the action
+        store, // store instance, same as `someStore`
+        args, // array of parameters passed to the action
+        after, // hook after the action returns or resolves
+        onError, // hook if the action throws or rejects
+      }) => {
+        // a shared variable for this specific action call
+        const startTime = Date.now()
+        // this will trigger before an action on `store` is executed
+        console.log(`${startTime} | Start "${name}" with params [${args.join(', ')}]. Store: "${store}" `)
+
+        // this will trigger if the action succeeds and after it has fully run.
+        // it waits for any returned promised
+        after((result) => {
+          const endTime = Date.now()
+          console.log(
+            `${endTime} | Finished "${name}" after ${
+              endTime - startTime
+            }ms.\nResult: ${result}.`
+          )
+        })
+
+        // this will trigger if the action throws or returns a promise that rejects
+        onError((error) => {
+          console.warn(
+            `Failed "${name}" after ${Date.now() - startTime}ms.\nError: ${error}.`
+          )
+        })
+      }
+    )
+
+    this.$store.$subscribe((mutation, state) => {
+      const subTime = Date.now()
+      console.log(`${subTime} | MutationType: "${mutation.type}" | Store: ${mutation.storeId}`)
+      console.log(mutation)
+      console.log(state)
+    })
+
   },
 
   methods: {
     increment() {
+      /*
       console.log(`knop geklikt waarde was: ${this.lastKnop}`)
       if (this.lastKnop === 'increment') { 
         console.log('increment 2e')
@@ -51,9 +94,11 @@ export default defineComponent({
       console.log('increment')
       this.lastKnop = 'increment'
       this.resetLastKnop()
+      */
       this.$store.increment()
     },
     decrement() {
+      /*
       console.log(`knop geklikt waarde was: ${this.lastKnop}`)
       if (this.lastKnop === 'decrement') { 
         console.log('decrement 2e')
@@ -64,11 +109,14 @@ export default defineComponent({
       console.log('decrement')
       this.lastKnop = 'decrement'
       this.resetLastKnop()
+      */
       this.$store.decrement()
     },
     add (nr) {
+      /*
       console.log(`knop dubbel geklikt waarde was: ${this.lastKnop}`)
       console.log('add')
+      */
       this.$store.add(nr)
     },
     resetLastKnop () {
