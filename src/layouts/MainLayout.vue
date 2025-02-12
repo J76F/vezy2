@@ -14,7 +14,9 @@
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
+        <OscSend />
 
+        <q-space />
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
@@ -48,6 +50,7 @@
 <script>
 import { defineComponent } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import OscSend from 'components/OscSend.vue'
 
 const linksList = [
   {
@@ -98,7 +101,8 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink,
+    OscSend
   },
 
   data () {
