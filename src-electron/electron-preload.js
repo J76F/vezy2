@@ -27,3 +27,10 @@
  *   }
  * }
  */
+
+import { contextBridge, ipcRenderer } from 'electron'
+
+// Expose methods defined in electron-main.js
+contextBridge.exposeInMainWorld('electron', {
+  oscSend: (buf) => ipcRenderer.invoke('oscSend', buf)
+})

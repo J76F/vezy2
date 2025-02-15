@@ -1,7 +1,12 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
 import os from 'node:os'
 import { fileURLToPath } from 'node:url'
+import dgram from "node:dgram"
+
+const udp = dgram.createSocket("udp4")
+const outAddress = 'localhost'
+const outPort = 7000
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform()
@@ -9,6 +14,13 @@ const platform = process.platform || os.platform()
 const currentDir = fileURLToPath(new URL('.', import.meta.url))
 
 let mainWindow
+
+ipcMain.handle('oscSend', (e, buf) => {
+  // https://nodejs.org/api/dgram.html#socketsendmsg-offset-length-port-address-callback
+  // socket.send(msg[, offset, length][, port][, address][, callback])
+  udp.send(buf, 0, buf.byteLength, outPort, outAddress)
+  return `sending OSC messages to http://localhost:${outPort}`
+})
 
 function createWindow () {
   /**
