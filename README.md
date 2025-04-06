@@ -1,6 +1,6 @@
-# VezyWorship (vezy-worship)
+# Vezy Test Repro
 
-Presentatiesoftware voor beamer én livestream
+Test only repro
 
 ## Install the dependencies
 ```bash
